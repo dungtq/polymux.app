@@ -21,8 +21,12 @@ by default, the -dark file loads in dark mode (OS setting or the site's theme to
   at the bottom, a shorter one leaves a gap, so keep the aspect ratios above (or change
   the frame's ar-* class in the HTML). Use fixture data only: no real hostnames, tokens or pane text.
 
-Open Graph image (not made yet)
-    assets/og-image.png         1200x630, referenced by og:image on every page as
+Open Graph image: present
+    assets/og-image.png         1280x640 PNG (2:1, under 1 MB), referenced by og:image and
+                                twitter:image in index.html and screenshots.html as
                                 https://polymux.app/assets/og-image.png (absolute URL, as
-                                Open Graph requires). Until it exists, link previews show
-                                no image.
+                                Open Graph requires), with og:image:width/height/alt.
+                                The same file is the GitHub social preview of
+                                dungtq/polymux (repo Settings > Social preview, uploaded by
+                                hand). Rendered from an HTML template with Playwright at
+                                1280x640, device scale 1; key text sits inside a 60px safe area.
