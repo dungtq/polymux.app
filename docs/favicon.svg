@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .f{fill:#ffffff}.l{stroke:#1f2328}.s{fill:#1a7f37}.w{fill:#9a6700}
+    @media (prefers-color-scheme:dark){.f{fill:#0d1117}.l{stroke:#f0f6fc}.s{fill:#3fb950}.w{fill:#d29922}}
+  </style>
+  <rect class="f l" x="2" y="2" width="28" height="28" rx="6" stroke-width="2.5"/>
+  <path class="l" d="M16 3v20M16 13h13" stroke-width="2.5" fill="none"/>
+  <rect class="s" x="3.25" y="23" width="25.5" height="5.75" rx="1"/>
+  <circle class="w" cx="22.5" cy="8" r="3"/>
+</svg>

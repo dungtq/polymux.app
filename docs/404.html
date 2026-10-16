@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found: polymux</title>
+<meta name="description" content="This page does not exist on polymux.app.">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  /* self-contained: GitHub Pages serves this file at any depth, where relative stylesheet paths break */
+  :root { color-scheme: light; --page: #fff; --fg: #1f2328; --muted: #59636e; --line: #d0d7de; --accent: #0969da;
+    --term: #0d1117; --term-fg: #e6edf3; --ok: #3fb950; --warn: #d29922; }
+  @media (prefers-color-scheme: dark) {
+    :root { color-scheme: dark; --page: #0d1117; --fg: #f0f6fc; --muted: #9198a1; --line: #3d444d; --accent: #4493f8; --term: #010409; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; grid-template-columns: minmax(0, 640px); justify-content: center; align-content: center; padding: 24px 16px; background: var(--page); color: var(--fg);
+    font: 1.0625rem/1.6 system-ui, -apple-system, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+  main { width: min(640px, 100%); }
+  pre { margin: 0 0 1.75rem; padding: 18px 18px 20px; border-radius: 10px; background: var(--term); color: var(--term-fg); overflow-x: auto;
+    font: .9375rem/1.8 ui-monospace, SFMono-Regular, Menlo, Consolas, "DejaVu Sans Mono", monospace; }
+  pre .p { color: var(--ok); } pre .e { color: var(--warn); }
+  h1 { margin: 0 0 .5rem; font: 700 clamp(1.75rem, 1.3rem + 2vw, 2.5rem)/1.15 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: -.03em; }
+  p { margin: 0 0 1.5rem; color: var(--muted); }
+  a { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 6px; background: var(--fg); color: var(--page);
+    font-weight: 600; text-decoration: none; margin-right: 12px; }
+</style>
+</head>
+<body>
+<main>
+<pre><span class="p">$</span> tmux select-window -t polymux:this-page
+<span class="e">can't find window: this-page</span></pre>
+<h1>No page here</h1>
+<p>This address is not part of polymux.app. It may have moved, or the link has a typo.</p>
+<a class="btn" href="index.html">Go to the home page</a><a href="https://github.com/dungtq/polymux">polymux on GitHub</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,203 @@
+/* polymux site: tokens, base type, tmux status line, buttons, device frames and screenshot placeholders.
+   Palette borrowed from pm's dt theme (src/pm/web/themes/dt/static/css/tokens.css). */
+:root {
+  color-scheme: light;
+  --page: #ffffff;
+  --subtle: #f6f8fa;
+  --side: #eef1f4;
+  --fg: #1f2328;
+  --muted: #59636e;
+  --line: #d0d7de;
+  --line2: #eaeef2;
+  --accent: #0969da;
+  --accent-soft: #ddf4ff;
+  --on-accent: #ffffff;
+  --waiting: #9a6700;
+  --waiting-soft: #fff8c5;
+  --running: #1a7f37;
+  --running-soft: #dafbe1;
+  --failed: #d1242f;
+  --pane-bg: #0d1117;
+  --pane-fg: #e6edf3;
+  --pane-muted: #9198a1;
+  --bezel: #24292f;
+  --bezel-edge: #24292f;
+  --k-claude: #c96442; --k-codex: #7c5cdb; --k-devin: #0e8f8f; --k-cursor: #5f6b7a; --k-antigravity: #d1388f;
+  --ph-bg: #f6f8fa; --ph-bar: #eaeef2; --ph-side: #eef1f4; --ph-line: #d8dee4;
+  --shadow: 0 24px 60px rgb(31 35 40 / .18);
+
+  --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", "JetBrains Mono", "Cascadia Mono", Menlo, Consolas,
+    "DejaVu Sans Mono", "Liberation Mono", monospace;
+  --cap: 1320px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --bar-h: 36px;
+  --r: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d1117; --subtle: #151b23; --side: #090d13; --fg: #f0f6fc; --muted: #9198a1;
+    --line: #3d444d; --line2: #21262d; --accent: #4493f8; --accent-soft: #1a2c4a; --on-accent: #0d1117;
+    --waiting: #d29922; --waiting-soft: #272115; --running: #3fb950; --running-soft: #12261e; --failed: #f85149;
+    --pane-bg: #010409; --bezel: #2d333b; --bezel-edge: #4a525c;
+    --k-claude: #e0866a; --k-codex: #a58af0; --k-devin: #3cc0c0; --k-cursor: #9aa7b8; --k-antigravity: #f06ab2;
+    --ph-bg: #151b23; --ph-bar: #21262d; --ph-side: #10151c; --ph-line: #262c35;
+    --shadow: 0 24px 60px rgb(0 0 0 / .55);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d1117; --subtle: #151b23; --side: #090d13; --fg: #f0f6fc; --muted: #9198a1;
+  --line: #3d444d; --line2: #21262d; --accent: #4493f8; --accent-soft: #1a2c4a; --on-accent: #0d1117;
+  --waiting: #d29922; --waiting-soft: #272115; --running: #3fb950; --running-soft: #12261e; --failed: #f85149;
+  --pane-bg: #010409; --bezel: #2d333b; --bezel-edge: #4a525c;
+  --k-claude: #e0866a; --k-codex: #a58af0; --k-devin: #3cc0c0; --k-cursor: #9aa7b8; --k-antigravity: #f06ab2;
+  --ph-bg: #151b23; --ph-bar: #21262d; --ph-side: #10151c; --ph-line: #262c35;
+  --shadow: 0 24px 60px rgb(0 0 0 / .55);
+}
+@media (min-width: 2200px) { :root { --cap: 1560px; } html { font-size: 112.5%; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--bar-h) + 16px); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  margin: 0; background: var(--page); color: var(--fg);
+  font: 400 1.0625rem/1.6 var(--sans); overflow-x: clip;
+}
+img { max-width: 100%; height: auto; }
+a { color: var(--accent); text-underline-offset: .18em; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+code, kbd, pre { font-family: var(--mono); font-size: .9em; }
+:not(pre) > code { background: var(--subtle); border: 1px solid var(--line2); border-radius: 4px; padding: .05em .3em; }
+h1, h2, h3 { font-family: var(--mono); line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(1.6rem, 1.15rem + 1.6vw, 2.5rem); font-weight: 600; letter-spacing: -.02em; }
+h3 { font-size: 1.0625rem; font-weight: 600; letter-spacing: -.01em; }
+p { margin: 0 0 1em; }
+.wrap { width: min(var(--cap), 100% - 2 * var(--gutter)); margin-inline: auto; }
+.skip { position: absolute; left: 8px; top: -60px; z-index: 50; background: var(--fg); color: var(--page); padding: 8px 12px; }
+.skip:focus { top: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---- tmux status line (site nav) ---- */
+.status {
+  position: sticky; top: 0; z-index: 20; height: var(--bar-h);
+  display: flex; align-items: stretch; gap: 0;
+  background: var(--subtle); border-bottom: 1px solid var(--line);
+  font: 500 .8125rem/1 var(--mono);
+}
+.status-session {
+  display: flex; align-items: center; padding: 0 12px; flex: none;
+  background: var(--running); color: var(--page); text-decoration: none; font-weight: 700;
+}
+.status-session:hover { text-decoration: none; }
+.status-windows { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; mask-image: linear-gradient(90deg, #000 calc(100% - 24px), transparent); }
+.status-windows::-webkit-scrollbar { display: none; }
+.status-windows ol { display: flex; height: 100%; margin: 0; padding: 0 8px; list-style: none; white-space: nowrap; }
+.status-windows a {
+  display: flex; align-items: center; height: 100%; padding: 0 8px; color: var(--muted); text-decoration: none;
+}
+.status-windows a:hover { color: var(--fg); }
+.status-windows a::after { content: "\00a0"; display: inline-block; width: 1ch; }
+.status-windows a[aria-current] { color: var(--fg); background: var(--page); box-shadow: inset 0 -2px 0 var(--running); }
+.status-windows a[aria-current]::after { content: "*"; color: var(--running); }
+.status-right { display: flex; align-items: center; gap: 2px; padding: 0 6px; flex: none; border-left: 1px solid var(--line); }
+.status-right a, .status-right button {
+  display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 8px; border-radius: 4px;
+  font: inherit; color: var(--fg); background: none; border: 0; cursor: pointer; text-decoration: none;
+}
+.status-right a:hover, .status-right button:hover { background: var(--line2); }
+.status-right svg { width: 16px; height: 16px; flex: none; }
+.status-right [data-mode] { color: var(--muted); }
+@media (max-width: 560px) {
+  .status-right .hide-sm { display: none; }
+  .status-right [data-mode] { display: none; }
+}
+
+/* ---- buttons ---- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px;
+  border-radius: var(--r); border: 1px solid var(--line); background: var(--page); color: var(--fg);
+  font: 600 .9375rem/1 var(--sans); text-decoration: none; cursor: pointer;
+}
+.btn:hover { background: var(--subtle); text-decoration: none; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn-primary { background: var(--fg); color: var(--page); border-color: var(--fg); }
+.btn-primary:hover { background: var(--fg); opacity: .88; }
+
+/* ---- device frames ---- */
+.device { margin: 0; position: relative; }
+.device figcaption { margin-top: 14px; font-size: .9375rem; color: var(--muted); }
+.device figcaption strong { display: block; color: var(--fg); font-weight: 600; }
+.bezel { background: var(--bezel); border: 1px solid var(--bezel-edge); padding: 2.2%; border-radius: 12px; box-shadow: var(--shadow); }
+.laptop .bezel { border-radius: 14px 14px 4px 4px; padding: 2.4% 2.4% 3%; }
+.bezel { position: relative; }
+.laptop .bezel::after {
+  content: ""; position: absolute; top: 100%; left: -5%; right: -5%; height: var(--base-h);
+  background: linear-gradient(var(--bezel-edge), var(--bezel)); border-radius: 2px 2px 14px 14px;
+}
+.laptop { --base-h: clamp(8px, 1.2vw, 16px); padding-inline: 4.6%; }
+.laptop figcaption { margin-top: calc(var(--base-h) + 14px); }
+.monitor .bezel { padding: 1.4%; border-radius: 8px; }
+.monitor { --stand-h: clamp(18px, 3vw, 46px); }
+.monitor .bezel::after {
+  content: ""; position: absolute; top: 100%; left: 41%; width: 18%; height: var(--stand-h);
+  background: linear-gradient(90deg, var(--bezel), var(--bezel-edge), var(--bezel));
+  clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
+}
+.monitor figcaption { margin-top: calc(var(--stand-h) + 14px); }
+.phone .bezel { padding: 3.2%; border-radius: clamp(16px, 13%, 52px) / clamp(16px, 6%, 52px); }
+.phone .screen { border-radius: clamp(10px, 11%, 44px) / clamp(10px, 5%, 44px); }
+
+/* ---- screenshot slot: placeholder behind, <picture> over it ----
+   A missing file must draw nothing over the placeholder. The <img> box is 3x the frame height with
+   object-fit: contain + object-position: top, so a real shot (frame aspect) still fills the frame, while WebKit's
+   centred broken-image icon lands below the clipped frame. A 2px overscan clips WebKit's broken border. In
+   Chromium/Firefox img::before/::after (rendered only for a broken image) repaint the placeholder. */
+.screen {
+  position: relative; overflow: hidden; border-radius: 4px; aspect-ratio: 16 / 10;
+  background: var(--ph-bg); container-type: inline-size;
+}
+.ar-mbp { aspect-ratio: 1512 / 982; }
+.ar-27 { aspect-ratio: 16 / 9; }
+.ar-34 { aspect-ratio: 3440 / 1440; }
+.ar-phone { aspect-ratio: 440 / 956; }
+.ar-phone-900 { aspect-ratio: 440 / 900; } /* dt iPhone shots are 440x900 */
+.screen picture { display: contents; }
+.screen img {
+  position: absolute; top: -2px; left: -2px; width: calc(100% + 4px); height: calc(300% + 4px); max-width: none;
+  object-fit: contain; object-position: top center; color: transparent; font-size: 0;
+}
+.ph, .screen img::before {
+  content: ""; position: absolute; inset: 0; display: block;
+  background:
+    linear-gradient(var(--ph-bar) 0 0) top left / 100% max(10px, 6.5%) no-repeat,
+    linear-gradient(var(--ph-side) 0 0) left top / 18% 100% no-repeat,
+    repeating-linear-gradient(180deg, transparent 0 calc(3.6cqw + 9px), var(--ph-line) 0 calc(3.6cqw + 10px)) 0 0 / 100% 100%,
+    var(--ph-bg);
+}
+.screen img::before { inset: 2px 2px auto; height: calc(33.333% - 2px); }
+.ar-phone .ph, .ar-phone img::before {
+  background:
+    linear-gradient(var(--ph-bar) 0 0) top left / 100% 9% no-repeat,
+    linear-gradient(var(--ph-bar) 0 0) bottom left / 100% 8% no-repeat,
+    repeating-linear-gradient(180deg, transparent 0 calc(11cqw + 10px), var(--ph-line) 0 calc(11cqw + 11px)) 0 0 / 100% 100%,
+    var(--ph-bg);
+}
+.ph-label, .screen img::after {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: max-content; max-width: 86%; padding: .6em .9em; border-radius: var(--r);
+  background: var(--page); border: 1px dashed var(--line); color: var(--muted);
+  font: 500 clamp(10px, 1.5cqw + 6px, 14px)/1.45 var(--mono); text-align: center; white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.screen img::after { content: attr(data-label) "\A" attr(data-path); top: calc(16.667% + 1px); }
+.ph-label b { display: block; color: var(--fg); font-weight: 600; }
+@container (max-width: 220px) {
+  .ph-path { display: none; }
+  .screen img::after { content: attr(data-label); }
+}
+@container (max-width: 110px) {
+  .ph-label, .screen img::after { padding: .3em .4em; font-size: 9px; }
+}

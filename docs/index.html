@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>polymux: one control plane for coding agents, tmux and servers</title>
+<meta name="description" content="polymux (command pm) is a self-hosted, single-user web control plane for one Linux host: projects, git state, tmux sessions and the coding agents running in them, containers and VMs, in one place. MIT.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="polymux">
+<meta property="og:title" content="polymux: one control plane for your coding agents, tmux sessions and servers">
+<meta property="og:description" content="Self-hosted, single-user web control plane for one Linux host. Claude Code, Codex, Devin, Cursor Agent, Antigravity, tmux, git, containers and VMs in one place.">
+<meta property="og:url" content="https://polymux.app/">
+<meta property="og:image" content="https://polymux.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/page.css">
+<script src="assets/head.js"></script>
+<script src="assets/site.js" defer></script>
+<script src="assets/lightbox.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="status" aria-label="Sections">
+  <a class="status-session" href="#top">[polymux]</a>
+  <div class="status-windows">
+    <ol>
+      <li><a href="#top">0:top</a></li>
+      <li><a href="#why">1:why</a></li>
+      <li><a href="#sync">2:sync</a></li>
+      <li><a href="#agents">3:agents</a></li>
+      <li><a href="#screens">4:screens</a></li>
+      <li><a href="#infra">5:infra</a></li>
+      <li><a href="#features">6:features</a></li>
+      <li><a href="#themes">7:themes</a></li>
+      <li><a href="#security">8:security</a></li>
+      <li><a href="#start">9:start</a></li>
+      <li><a href="#status">10:status</a></li>
+    </ol>
+  </div>
+  <div class="status-right">
+    <button type="button" id="theme-toggle" aria-label="Switch colour theme">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg>
+      <span data-mode>auto</span>
+    </button>
+    <a href="screenshots.html" class="hide-sm">Screenshots</a>
+    <a href="https://github.com/dungtq/polymux" aria-label="polymux on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4 1.5 8l4 4M10.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="hide-sm">GitHub</span>
+    </a>
+  </div>
+</nav>
+
+<main id="main">
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="wrap split">
+    <div>
+      <h1 id="hero-title">polymux</h1>
+      <p class="tagline">One control plane for your coding agents, tmux sessions and servers.</p>
+      <p class="sub">A self-hosted web app for one Linux host. Your projects and their git state, your tmux sessions and the agents running in them, your containers and VMs. Launch agents, read and answer their chats, stop them, from any screen.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/dungtq/polymux">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4 1.5 8l4 4M10.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          GitHub
+        </a>
+        <a class="btn" href="#start">Quick start</a>
+      </div>
+      <p class="facts">Command <code>pm</code>. Single user, MIT licensed. Python 3.13, FastAPI and HTMX, no JavaScript build step.</p>
+    </div>
+    <div class="duo">
+      <figure class="device monitor">
+        <div class="bezel">
+          <div class="screen">
+            <span class="ph" aria-hidden="true"><span class="ph-label"><b>Screenshot placeholder</b><span class="ph-path">assets/shots/dt-desktop-{light,dark}.png</span></span></span>
+            <picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/dt-desktop-dark.png"><img src="assets/shots/dt-desktop-light.png" width="1440" height="900" alt="polymux in the dt theme on a desktop browser" data-label="Screenshot placeholder" data-path="assets/shots/dt-desktop-{light,dark}.png"></picture><a class="zoom" href="assets/shots/dt-desktop-light.png" data-caption="dt theme, desktop: Inbox"><span class="sr">Enlarge screenshot: dt theme, desktop: Inbox</span></a>
+          </div>
+        </div>
+      </figure>
+      <figure class="device phone">
+        <div class="bezel">
+          <div class="screen ar-phone ar-phone-900">
+            <span class="ph" aria-hidden="true"><span class="ph-label"><b>iPhone</b><span class="ph-path">dt-iphone-{light,dark}.png</span></span></span>
+            <picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/dt-iphone-dark.png"><img src="assets/shots/dt-iphone-light.png" width="440" height="900" alt="polymux in the dt theme on an iPhone" data-label="iPhone" data-path="dt-iphone-{light,dark}.png"></picture><a class="zoom" href="assets/shots/dt-iphone-light.png" data-caption="dt theme, iPhone: Inbox"><span class="sr">Enlarge screenshot: dt theme, iPhone: Inbox</span></a>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="why" aria-labelledby="why-title">
+  <div class="wrap split">
+    <div class="prose">
+      <h2 id="why-title">Thirty tmux sessions, and which one is waiting for me?</h2>
+      <p class="lead">I'm a technical guy, not a developer. I built polymux as my own place to experiment with coding agents, and I want to use every coding agent out there, not only Claude Code or Codex.</p>
+      <p>I work in the terminal and keep many sessions open at once, usually 10 to 50 tmux sessions. With that many it gets very hard to keep track: which agent is waiting for me, what each one answered, and where the docs they wrote ended up.</p>
+      <p class="byline">dungtq, who builds polymux</p>
+    </div>
+    <div class="panes">
+      <div class="pane term-pane">
+        <div class="pane-title"><span>tmux</span><span>what tmux tells you</span></div>
+<pre class="term"><span class="p">$</span> tmux ls
+api: 4 windows (attached)
+billing: 2 windows
+blog: 1 windows
+docs-site: 3 windows
+edge-bgp: 2 windows
+infra: 6 windows (attached)
+lab-ospf: 5 windows
+mail: 1 windows
+vm-builds: 2 windows
+<span class="c"># ...and 21 more</span></pre>
+      </div>
+      <div class="pane">
+        <div class="pane-title"><span>polymux Inbox</span><span>same host</span></div>
+        <div class="inbox">
+          <h3><span class="dot" style="--c:var(--waiting)"></span>Waiting for you <span class="n">2</span></h3>
+          <ul>
+            <li class="wait"><span class="dot" style="--c:var(--k-claude)"></span><span class="who">Claude Code</span><span class="sess">api</span></li>
+            <li class="wait"><span class="dot" style="--c:var(--k-codex)"></span><span class="who">Codex</span><span class="sess">billing</span></li>
+          </ul>
+          <h3><span class="dot" style="--c:var(--running)"></span>Running <span class="n">3</span></h3>
+          <ul>
+            <li><span class="dot" style="--c:var(--k-devin)"></span><span class="who">Devin</span><span class="sess">docs-site</span></li>
+            <li><span class="dot" style="--c:var(--k-cursor)"></span><span class="who">Cursor Agent</span><span class="sess">infra</span></li>
+            <li><span class="dot" style="--c:var(--k-claude)"></span><span class="who">Claude Code</span><span class="sess">vm-builds</span></li>
+          </ul>
+          <h3><span class="dot"></span>Idle <span class="n">2</span></h3>
+          <ul>
+            <li><span class="dot" style="--c:var(--k-antigravity)"></span><span class="who">Antigravity</span><span class="sess">blog</span></li>
+            <li><span class="dot" style="--c:var(--k-codex)"></span><span class="who">Codex</span><span class="sess">lab-ospf</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sync" id="sync" aria-labelledby="sync-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="sync-title">Type in tmux or in the browser. It is the same session.</h2>
+      <p class="lead">polymux stays in sync with tmux. Every agent and shell is a real tmux pane, so you can type in tmux or in the web UI, from the laptop or the phone, and it doesn't matter: both show the same session.</p>
+    </div>
+    <div class="sync-pair">
+      <div class="pane term-pane">
+        <div class="pane-title"><span>tmux, api:1, on the laptop</span><span>claude</span></div>
+<pre class="term"><span class="p">&gt;</span> run the tests and fix what fails
+<span class="c">  uv run pytest -q</span>
+<span class="c">  2 failed, 148 passed</span>
+  Fixed both in tests/test_api.py.
+<span class="p">&gt;</span> commit it</pre>
+      </div>
+      <p class="sync-link" aria-hidden="true">&#8644;<br>same pane</p>
+      <div class="pane">
+        <div class="pane-title"><span>polymux chat, on the phone</span><span>api</span></div>
+        <div class="chat">
+          <p class="bub me">run the tests and fix what fails</p>
+          <p class="bub">Ran <code>uv run pytest -q</code>: 2 failed, 148 passed. Fixed both in tests/test_api.py.</p>
+          <p class="bub me">commit it</p>
+          <div class="composer"><span>Message Claude Code</span><span>Send</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="agents" aria-labelledby="agents-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="agents-title">Any agent, not one vendor</h2>
+      <p class="lead">polymux runs the coding agent CLIs you already have, each in its own tmux window, side by side.</p>
+    </div>
+    <ul class="chips" aria-label="Supported coding agents">
+      <li><span class="dot" style="--c:var(--k-claude)"></span>Claude Code</li>
+      <li><span class="dot" style="--c:var(--k-codex)"></span>Codex</li>
+      <li><span class="dot" style="--c:var(--k-devin)"></span>Devin</li>
+      <li><span class="dot" style="--c:var(--k-cursor)"></span>Cursor Agent</li>
+      <li><span class="dot" style="--c:var(--k-antigravity)"></span>Antigravity</li>
+      <li class="more"><a href="https://github.com/dungtq/polymux/blob/main/CONTRIBUTING.md">add yours</a></li>
+    </ul>
+    <div class="agent-notes">
+      <div><h3>Launch</h3><p>Start any of them in a new tmux window with model, effort, permission mode and an optional git worktree.</p></div>
+      <div><h3>Follow up</h3><p>Fork, continue, review, or stop them all. Ended agents keep a permanent page.</p></div>
+      <div><h3>Library</h3><p>See the skills, rules, scripts and MCP servers installed for each agent.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="screens" aria-labelledby="screens-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="screens-title">Everywhere you are</h2>
+      <p class="lead">I switch screens all day. I needed one place I can open from any of them and still see everything I'm working on.</p>
+    </div>
+    <div class="desk">
+      <figure class="device monitor uw">
+        <div class="bezel">
+          <div class="screen ar-34">
+            <span class="ph" aria-hidden="true"><span class="ph-label"><b>Screenshot placeholder</b><span class="ph-path">assets/shots/device-ultrawide34-{light,dark}.png</span></span></span>
+            <picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/device-ultrawide34-dark.png"><img src="assets/shots/device-ultrawide34-light.png" width="3440" height="1440" loading="lazy" alt="polymux on a 34 inch ultrawide monitor" data-label="Screenshot placeholder" data-path="assets/shots/device-ultrawide34-{light,dark}.png"></picture>
+          </div>
+        </div>
+        <figcaption><strong>34" ultrawide, 3440 x 1440</strong>At home, on a Mac mini.</figcaption>
+      </figure>
+      <figure class="device monitor">
+        <div class="bezel">
+          <div class="screen ar-27">
+            <span class="ph" aria-hidden="true"><span class="ph-label"><b>Screenshot placeholder</b><span class="ph-path">assets/shots/device-dell27-{light,dark}.png</span></span></span>
+            <picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/device-dell27-dark.png"><img src="assets/shots/device-dell27-light.png" width="2560" height="1440" loading="lazy" alt="polymux on a Dell 27 inch 2K monitor" data-label="Screenshot placeholder" data-path="assets/shots/device-dell27-{light,dark}.png"></picture>
+          </div>
+        </div>
+        <figcaption><strong>Dell 27" 2K, 2560 x 1440</strong>At work, next to the laptop.</figcaption>
+      </figure>
+      <figure class="device laptop">
+        <div class="bezel">
+          <div class="screen ar-mbp">
+            <span class="ph" aria-hidden="true"><span class="ph-label"><b>Screenshot placeholder</b><span class="ph-path">assets/shots/device-mbp14-{light,dark}.png</span></span></span>
+            <picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/device-mbp14-dark.png"><img src="assets/shots/device-mbp14-light.png" width="1512" height="982" loading="lazy" alt="polymux on a MacBook Pro 14 inch" data-label="Screenshot placeholder" data-path="assets/shots/device-mbp14-{light,dark}.png"></picture>
+          </div>
+        </div>
+        <figcaption><strong>MacBook Pro 14", 1512 x 982</strong>At work, with or without the Dell.</figcaption>
+      </figure>
+      <figure class="device phone">
+        <div class="bezel">
+          <div class="screen ar-phone">
+            <span class="ph" aria-hidden="true"><span class="ph-label"><b>iPhone</b><span class="ph-path">classic-iphone-{light,dark}.png</span></span></span>
+            <picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/classic-iphone-dark.png"><img src="assets/shots/classic-iphone-light.png" width="440" height="956" loading="lazy" alt="polymux in the classic theme on an iPhone 17 Pro Max" data-label="iPhone" data-path="classic-iphone-{light,dark}.png"></picture><a class="zoom" href="assets/shots/classic-iphone-light.png" data-caption="classic theme, iPhone: Inbox"><span class="sr">Enlarge screenshot: classic theme, iPhone: Inbox</span></a>
+          </div>
+        </div>
+        <figcaption><strong>iPhone 17 Pro Max</strong>Outside. Phone layout with a tab bar.</figcaption>
+      </figure>
+    </div>
+    <div class="where" aria-labelledby="where-title">
+      <div class="where-text">
+        <h3 id="where-title">Where it runs</h3>
+        <p>polymux and your agents run on a Linux VPS or dedicated server. Every device is just a browser pointed at it.</p>
+        <p>That's on purpose: I don't want coding agents running on my laptop or phone. Your devices never run agents, and you can still reach everything from anywhere.</p>
+        <p class="muted">Want it on your own machine instead? That works too: install it on any Linux box.</p>
+      </div>
+      <div class="diagram" role="img" aria-label="Diagram: a MacBook Pro, a Dell 27 inch monitor, a 34 inch ultrawide and an iPhone each open polymux in a browser over HTTPS. polymux, tmux and the coding agents all run on one Linux server.">
+        <ul class="d-devices" aria-hidden="true">
+          <li>MacBook Pro 14"<span>browser</span></li>
+          <li>Dell 27" 2K<span>browser</span></li>
+          <li>34" ultrawide<span>browser</span></li>
+          <li>iPhone 17 Pro Max<span>browser</span></li>
+        </ul>
+        <div class="d-link" aria-hidden="true"><span>HTTPS</span></div>
+        <div class="d-server" aria-hidden="true">
+          <p class="d-host">Linux VPS or dedicated server</p>
+          <p class="d-pm"><b>pm</b> on loopback, behind a TLS reverse proxy</p>
+          <div class="d-tmux">
+            <p>tmux</p>
+            <ul>
+              <li><span class="dot" style="--c:var(--k-claude)"></span>api<span>claude</span></li>
+              <li><span class="dot" style="--c:var(--k-codex)"></span>billing<span>codex</span></li>
+              <li><span class="dot" style="--c:var(--k-devin)"></span>docs-site<span>devin</span></li>
+              <li><span class="dot"></span>edge-bgp<span>shell</span></li>
+            </ul>
+          </div>
+          <p class="d-more">containers, VMs, git repos</p>
+        </div>
+      </div>
+    </div>
+    <div class="principles">
+      <div>
+        <h3>Self-hosted, in one place</h3>
+        <p>I want it self-hosted as much as possible. I'd rather not build on a provider's website, and I don't want to copy things back and forth between tools and machines. Everything should live in one place that I choose, and be there when I need it.</p>
+      </div>
+      <div>
+        <h3>Fast, not bloated</h3>
+        <p>I want it fast and not bloated. The core stays small on purpose. If you want another feature, build it as a plugin (pages, nav items, settings, themes, links), so people who want it can install it and everyone else keeps a lean polymux.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="infra" aria-labelledby="infra-title">
+  <div class="wrap split">
+    <div class="prose">
+      <h2 id="infra-title">Not only code</h2>
+      <p class="lead">Much of what runs in my tmux sessions is servers, infrastructure and networking work. polymux keeps it in the same view as the agents: shells, projects, git, containers and VMs.</p>
+    </div>
+    <div>
+      <dl class="defs">
+        <div><dt>Host</dt><dd>Resources and processes of the machine pm runs on.</dd></div>
+        <div><dt>Containers</dt><dd>Docker containers with stop, restart and kill. Names that match your protected globs are never touched.</dd></div>
+        <div><dt>Stacks</dt><dd>Each project's compose stack, on its project page.</dd></div>
+        <div><dt>VMs</dt><dd>libvirt guests, per host and per project.</dd></div>
+        <div><dt>Other hosts</dt><dd>Whether the machines you care about are reachable.</dd></div>
+        <div><dt>Health alerts</dt><dd>Host health alerts go to ntfy, next to agent state changes.</dd></div>
+      </dl>
+      <p class="note">Optional parts hide themselves when their tool is missing: no Docker, no Stacks; no libvirt, no VMs; no ntfy URL, no ntfy.</p>
+    </div>
+  </div>
+</section>
+
+<section id="features" aria-labelledby="features-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="features-title">What you get</h2>
+    </div>
+    <ul class="rows">
+      <li><h3>Inbox</h3><p>All running agents grouped Waiting for you, Running and Idle, with last message, unread badges, recap, exit and resume.</p></li>
+      <li><h3>Chat</h3><p>A live chat view of each agent. Composer with queued messages, file attach and snippets; quick one-off <code>claude -p</code> chats.</p></li>
+      <li><h3>Projects &amp; git</h3><p>Every folder under <code>dev_root</code> is a project. Git badges for dirty, ahead and behind; fetch, pull, push and history.</p></li>
+      <li><h3>tmux</h3><p>Sessions, windows and panes. New session, kill with guards, optional read-only browser terminal.</p></li>
+      <li><h3>Servers / VMs</h3><p>Host resources, processes, Docker containers, libvirt VMs and the reachability of other hosts.</p></li>
+      <li><h3>Notifications</h3><p>Agent state changes and host alerts to ntfy; ntfy topics mirrored into the Inbox.</p></li>
+      <li><h3>Builder preview</h3><p>Agent chat on the left, a sandboxed live preview of the project's static files on the right.</p></li>
+      <li><h3>Tracker</h3><p>Issues, TODO, CHANGELOG and FEATURES live in SQLite and render to Markdown. Agents use the <code>pmctl</code> CLI.</p></li>
+    </ul>
+    <div class="tour-head">
+      <h3>A closer look at dt</h3>
+      <p>Fixture data. Select a screenshot to enlarge it; more on the <a href="screenshots.html">screenshots page</a>.</p>
+    </div>
+    <ul class="tour">
+      <li class="t-desk"><figure>
+        <a class="zoom" href="assets/shots/dt/01-inbox-light.png" data-caption="dt theme: Inbox"><picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/dt/01-inbox-dark.png"><img src="assets/shots/dt/01-inbox-light.png" width="1440" height="900" loading="lazy" decoding="async" alt="dt theme, Inbox"></picture></a>
+        <figcaption><b>Inbox</b> Agents grouped by who needs you.</figcaption>
+      </figure></li>
+      <li class="t-desk"><figure>
+        <a class="zoom" href="assets/shots/dt/02-agent-chat-light.png" data-caption="dt theme: Agent chat"><picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/dt/02-agent-chat-dark.png"><img src="assets/shots/dt/02-agent-chat-light.png" width="1440" height="900" loading="lazy" decoding="async" alt="dt theme, Agent chat"></picture></a>
+        <figcaption><b>Agent chat</b> Read and answer one agent.</figcaption>
+      </figure></li>
+      <li class="t-desk"><figure>
+        <a class="zoom" href="assets/shots/dt/03-project-light.png" data-caption="dt theme: Project"><picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/dt/03-project-dark.png"><img src="assets/shots/dt/03-project-light.png" width="1440" height="900" loading="lazy" decoding="async" alt="dt theme, Project"></picture></a>
+        <figcaption><b>Project</b> Agents, sessions, git and files of one folder.</figcaption>
+      </figure></li>
+      <li class="t-desk"><figure>
+        <a class="zoom" href="assets/shots/dt/04-tmux-light.png" data-caption="dt theme: tmux"><picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/dt/04-tmux-dark.png"><img src="assets/shots/dt/04-tmux-light.png" width="1440" height="900" loading="lazy" decoding="async" alt="dt theme, tmux"></picture></a>
+        <figcaption><b>tmux</b> Sessions, windows and panes.</figcaption>
+      </figure></li>
+      <li class="t-phone"><figure>
+        <a class="zoom" href="assets/shots/dt/10-iphone-inbox-light.png" data-caption="dt theme: iPhone Inbox"><picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/dt/10-iphone-inbox-dark.png"><img src="assets/shots/dt/10-iphone-inbox-light.png" width="440" height="900" loading="lazy" decoding="async" alt="dt theme, iPhone Inbox"></picture></a>
+        <figcaption><b>iPhone Inbox</b> </figcaption>
+      </figure></li>
+      <li class="t-phone"><figure>
+        <a class="zoom" href="assets/shots/dt/11-iphone-chat-light.png" data-caption="dt theme: iPhone chat"><picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/dt/11-iphone-chat-dark.png"><img src="assets/shots/dt/11-iphone-chat-light.png" width="440" height="900" loading="lazy" decoding="async" alt="dt theme, iPhone chat"></picture></a>
+        <figcaption><b>iPhone chat</b> </figcaption>
+      </figure></li>
+    </ul>
+  </div>
+</section>
+
+<section id="themes" aria-labelledby="themes-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="themes-title">Two themes, one app</h2>
+      <p class="lead">Pick one per browser in Settings or with <code>?ui=dt</code> on any URL. Set the server default with <code>theme = "dt"</code> in <code>pm.toml</code>.</p>
+    </div>
+    <div class="themes">
+      <div>
+        <div class="duo">
+          <figure class="device monitor">
+            <div class="bezel">
+              <div class="screen">
+                <span class="ph" aria-hidden="true"><span class="ph-label"><b>Screenshot placeholder</b><span class="ph-path">assets/shots/classic-desktop-{light,dark}.png</span></span></span>
+                <picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/classic-desktop-dark.png"><img src="assets/shots/classic-desktop-light.png" width="2880" height="1800" loading="lazy" alt="The classic theme on a desktop browser" data-label="Screenshot placeholder" data-path="assets/shots/classic-desktop-{light,dark}.png"></picture><a class="zoom" href="assets/shots/classic-desktop-light.png" data-caption="classic theme, desktop: Inbox"><span class="sr">Enlarge screenshot: classic theme, desktop: Inbox</span></a>
+              </div>
+            </div>
+          </figure>
+          <figure class="device phone">
+            <div class="bezel">
+              <div class="screen ar-phone">
+                <span class="ph" aria-hidden="true"><span class="ph-label"><b>iPhone</b><span class="ph-path">classic-iphone-{light,dark}.png</span></span></span>
+                <picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/classic-iphone-dark.png"><img src="assets/shots/classic-iphone-light.png" width="440" height="956" loading="lazy" alt="The classic theme on an iPhone" data-label="iPhone" data-path="classic-iphone-{light,dark}.png"></picture><a class="zoom" href="assets/shots/classic-iphone-light.png" data-caption="classic theme, iPhone: Inbox"><span class="sr">Enlarge screenshot: classic theme, iPhone: Inbox</span></a>
+              </div>
+            </div>
+          </figure>
+        </div>
+        <h3>classic <span class="muted">the default</span></h3>
+        <p>A sidebar layout with a phone tab bar.</p>
+      </div>
+      <div>
+        <div class="duo">
+          <figure class="device monitor">
+            <div class="bezel">
+              <div class="screen">
+                <span class="ph" aria-hidden="true"><span class="ph-label"><b>Screenshot placeholder</b><span class="ph-path">assets/shots/dt-desktop-{light,dark}.png</span></span></span>
+                <picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/dt-desktop-dark.png"><img src="assets/shots/dt-desktop-light.png" width="1440" height="900" loading="lazy" alt="The dt theme on a desktop browser" data-label="Screenshot placeholder" data-path="assets/shots/dt-desktop-{light,dark}.png"></picture><a class="zoom" href="assets/shots/dt-desktop-light.png" data-caption="dt theme, desktop: Inbox"><span class="sr">Enlarge screenshot: dt theme, desktop: Inbox</span></a>
+              </div>
+            </div>
+          </figure>
+          <figure class="device phone">
+            <div class="bezel">
+              <div class="screen ar-phone ar-phone-900">
+                <span class="ph" aria-hidden="true"><span class="ph-label"><b>iPhone</b><span class="ph-path">dt-iphone-{light,dark}.png</span></span></span>
+                <picture><source data-dark media="(prefers-color-scheme: dark)" srcset="assets/shots/dt-iphone-dark.png"><img src="assets/shots/dt-iphone-light.png" width="440" height="900" loading="lazy" alt="The dt theme on an iPhone" data-label="iPhone" data-path="dt-iphone-{light,dark}.png"></picture><a class="zoom" href="assets/shots/dt-iphone-light.png" data-caption="dt theme, iPhone: Inbox"><span class="sr">Enlarge screenshot: dt theme, iPhone: Inbox</span></a>
+              </div>
+            </div>
+          </figure>
+        </div>
+        <h3>dt <span class="muted">newer, keyboard first</span></h3>
+        <p>A keyboard-driven shell: tabs, a sessions sidebar, command menus and layered panels. This site borrows its colours.</p>
+      </div>
+    </div>
+    <div class="keys">
+      <h3>dt speaks vim and macOS</h3>
+      <p>Vim-style keys for lists and pages, macOS-style search and switching. Use Ctrl instead of ⌘ on Linux and Windows.</p>
+      <dl class="keymap">
+        <div><dt><kbd>J</kbd><kbd>K</kbd></dt><dd>Move through a list</dd></div>
+        <div><dt><kbd>⌘K</kbd><span class="then">or</span><kbd>⌘⇧P</kbd></dt><dd>Search everything</dd></div>
+        <div><dt><kbd>G</kbd><span class="then">then</span><kbd>I</kbd><kbd>P</kbd><kbd>T</kbd></dt><dd>Go to Inbox, Projects, tmux</dd></div>
+        <div><dt><kbd>&gt;</kbd></dt><dd>Typed in search: commands only</dd></div>
+        <div><dt><kbd>/</kbd></dt><dd>Filter the list</dd></div>
+        <div><dt><kbd>⌘P</kbd></dt><dd>Go to a session</dd></div>
+        <div><dt><kbd>?</kbd></dt><dd>Show all keys</dd></div>
+        <div><dt><kbd>⌘B</kbd></dt><dd>Toggle the sidebar</dd></div>
+        <div><dt><kbd>Esc</kbd></dt><dd>Close the top layer</dd></div>
+        <div><dt><kbd>⌘,</kbd></dt><dd>Open settings</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="security" aria-labelledby="security-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="security-title">Security model</h2>
+      <p class="lead">pm can send text to coding agents, kill tmux windows, stop containers and change VMs. Treat access to it like a shell on the host.</p>
+    </div>
+    <div class="sec-grid">
+      <div>
+        <h3>One user, one host</h3>
+        <ul class="plain">
+          <li>Runs as your user on one Linux host, never as root.</li>
+          <li>Binds to loopback. Other machines reach it only through a TLS reverse proxy.</li>
+          <li>Log in with a token (created with mode 0600 on first start) or a passkey. Failed logins back off.</li>
+          <li>Optional TOTP; with <code>require_unlock</code> on, every change needs a TOTP or passkey unlock first.</li>
+          <li>Session cookie is <code>Secure</code>, <code>HttpOnly</code>, <code>SameSite=Strict</code>; sessions can be listed and revoked.</li>
+        </ul>
+        <h3 style="margin-top:2rem">Protected by default</h3>
+        <ul class="plain">
+          <li>Every tmux session is protected unless its name matches a glob you allow. <code>pm*</code> sessions always are.</li>
+          <li>Containers and VMs that match your protected globs are never changed.</li>
+          <li>Pane text is stripped and masked for secrets, and never logged, indexed or sent to ntfy.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Every change passes one guard</h3>
+        <ol class="guard">
+          <li>Logged-in session, else 401.</li>
+          <li>Origin check against your allowed origins, else 403.</li>
+          <li>Per-session CSRF token, else 403.</li>
+          <li>Unlocked session, when <code>require_unlock</code> is on.</li>
+          <li>Tier check against the tier ceiling.</li>
+          <li>Audit line written and synced to disk. If that fails, the request is refused.</li>
+        </ol>
+        <h3 style="margin-top:2rem">Tiers</h3>
+        <table>
+          <thead><tr><th scope="col">Tier</th><th scope="col">Allows</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>View: read pages</td></tr>
+            <tr><td>1</td><td>Safe: edit backlog and TODO, git remotes, project settings</td></tr>
+            <tr><td>2</td><td>Message: send text to agents, fork, exit, quick chat, terminal ticket (the default ceiling)</td></tr>
+            <tr><td>3</td><td>Terminal: reserved, not enabled</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="warnline">Found a security problem? Please report it privately with <a href="https://github.com/dungtq/polymux/security/advisories/new">GitHub private vulnerability reporting</a>, not in a public issue. Full model: <a href="https://github.com/dungtq/polymux/blob/main/SECURITY.md">SECURITY.md</a>.</p>
+  </div>
+</section>
+
+<section id="start" aria-labelledby="start-title">
+  <div class="wrap split">
+    <div class="prose">
+      <h2 id="start-title">Quick start</h2>
+      <p class="lead">Linux, Python 3.13 or newer through uv, tmux and git. Docker, libvirt, ntfy and the agent CLIs are optional.</p>
+    </div>
+    <div>
+      <div class="qs-term">
+        <button type="button" class="copy" data-copy="qs-cmds" hidden>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="9" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11 3.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>Copy</span>
+        </button>
+<pre class="term" id="qs-cmds" data-text="git clone https://github.com/dungtq/polymux.git
+cd polymux
+uv sync
+uv run pm"><span class="p">$</span> git clone https://github.com/dungtq/polymux.git
+<span class="p">$</span> cd polymux
+<span class="p">$</span> uv sync
+<span class="p">$</span> uv run pm</pre>
+      </div>
+      <ul class="after plain">
+        <li>Open <code>http://127.0.0.1:8093</code>. On first start pm writes a login token to <code>~/.config/pm/token</code> (mode 0600). Paste it into the login form.</li>
+        <li>Plain <code>http://</code> works only on <code>127.0.0.1</code> and <code>localhost</code>, because the session cookie is <code>Secure</code>. Anywhere else, put pm behind a TLS reverse proxy: <a href="https://github.com/dungtq/polymux/blob/main/docs/INSTALL.md">docs/INSTALL.md</a>.</li>
+        <li>The git panel fetches, pulls and pushes the remote named <code>gitdev</code>. Add yours under that name in each project.</li>
+        <li>Every <code>pm.toml</code> key and its default: <a href="https://github.com/dungtq/polymux/blob/main/docs/CONFIG.md">docs/CONFIG.md</a>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="status-sec" id="status" aria-labelledby="status-title">
+  <div class="wrap">
+    <p class="badge"><span class="dot" style="--c:var(--waiting)"></span>early, about 10 days old</p>
+    <h2 id="status-title">Status and contributing</h2>
+    <div class="prose">
+      <p class="lead">I have been building polymux for only about 10 days, so it still has bugs. It is a working tool I use every day, but it moves fast: pages change and some parts are unfinished.</p>
+      <p>Both themes have bugs. <code>classic</code> works but has open UI issues, from a low-contrast label to rows that stretch too wide on big screens and a few iPhone wrapping glitches. <code>dt</code> is newer and still being built: some pages are not ported yet and show their classic version inside the dt shell.</p>
+      <blockquote><p>The cool part: polymux is where I work on all my other projects, so I keep fixing polymux along the way. Every rough edge I hit while doing something else turns into the next fix.</p></blockquote>
+      <p>Contributions are very welcome: bug reports, ideas, fixes, support for more coding agents, new themes.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/dungtq/polymux/issues">Open an issue</a>
+        <a class="btn" href="https://github.com/dungtq/polymux/blob/main/CONTRIBUTING.md">Read CONTRIBUTING.md</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <p class="mark">polymux</p>
+      <p class="muted">A web control plane for one Linux host. MIT licensed.</p>
+    </div>
+    <div>
+      <h2>Project</h2>
+      <ul>
+        <li><a href="https://github.com/dungtq/polymux">GitHub</a></li>
+        <li><a href="https://github.com/dungtq/polymux/issues">Issues</a></li>
+        <li><a href="screenshots.html">Screenshots</a></li>
+        <li><a href="https://github.com/dungtq/polymux/blob/main/LICENSE">MIT license</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Docs</h2>
+      <ul>
+        <li><a href="https://github.com/dungtq/polymux#readme">README</a></li>
+        <li><a href="https://github.com/dungtq/polymux/blob/main/docs/INSTALL.md">docs/INSTALL.md</a></li>
+        <li><a href="https://github.com/dungtq/polymux/blob/main/docs/CONFIG.md">docs/CONFIG.md</a></li>
+        <li><a href="https://github.com/dungtq/polymux/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Security</h2>
+      <ul>
+        <li><a href="https://github.com/dungtq/polymux/security/advisories/new">Report a vulnerability</a></li>
+        <li><a href="https://github.com/dungtq/polymux/blob/main/SECURITY.md">SECURITY.md</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
